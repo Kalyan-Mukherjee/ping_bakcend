@@ -5,7 +5,7 @@ permissions:
 
 on:
   schedule:
-    - cron: '*/10 * * * *'  # Every 2 minutes (UTC)
+    - cron: '*/10 * * * *'  # Every 10 minutes (UTC)
   workflow_dispatch:
 
 jobs:
@@ -21,10 +21,10 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check /uptime endpoint
+      - name: Check /health endpoint
         id: ping
         run: |
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 70 https://main-backend-b3ak.onrender.com/uptime)
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 70 https://rc-backend-maqi.onrender.com/health)
           EXIT_CODE=$?
           if [ $EXIT_CODE -ne 0 ]; then
             STATUS="timeout"
